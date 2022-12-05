@@ -1,22 +1,15 @@
 package mx.uv;
-
 import static spark.Spark.*;
 import com.google.gson.*;
-
 import java.util.List;
-import java.util.UUID;
 
-/**
- * Hello world!
- *
- */
 public class App {
     public static Gson gson = new Gson();
 
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
 
-        // Aqui va el CORS
+        //CORS
         options("/*", (request, response) -> {
             String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
             System.out.println(accessControlRequestHeaders);
@@ -32,41 +25,57 @@ public class App {
         });
         before((req, res)-> res.header("Access-Control-Allow-Origin", "*"));
 
-
-        get("/usuarios", (req, res) -> {
+        //CONSULTA EQUIPOS
+        //Prueba de la lista de equipos obtenidos de la base de datos.
+        List<Equipo> resultado = DAO.GetEquipos();
+        for(Equipo e: resultado){
+            System.out.println(e.toString());
+        }
+        //---->>> Se convierte a Json para enviarlo
+        get("/", (req, res) -> {
             res.type("application/json");
-            return gson.toJson(DAO.dameUsuarios());
+            return gson.toJson(DAO.GetEquipos());
         });
 
-        post("/", (req, res) -> {
-            String datosCliente = req.body();
-            String id = UUID.randomUUID().toString();
-            Usuario u = gson.fromJson(datosCliente, Usuario.class);
-            u.setId(id);
+        //CONSULTA PARTIDOS
+        //Prueba de la lista de partidos obtenidos de la base de datos.
+        List<Partido> partidos = DAO.GetPartidos();
+        for(Partido p: partidos){
+            System.out.println(p.toString());
+        }
+        //---->>> Se convierte a Json para enviarlo
+        get("/partidos", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(DAO.GetPartidos());
+        });
+
+        //AGREGAR EQUIPOS
+        //Prueba de agregar equipo a la base de datos
+        //System.out.println(DAO.agregarEquipo(new Equipo("España", 190)));
+
+        //
+        post("/admin", (req, res) -> {
+            String datos = req.body();
+            Equipo e = gson.fromJson(datos, Equipo.class);
 
             // devolver una respuesta JSON
             JsonObject objetoJson = new JsonObject();
-            objetoJson.addProperty("status", DAO.crearUsuario(u));
-            objetoJson.addProperty("id", id);
+            objetoJson.addProperty("status", DAO.agregarEquipo(e));
             return objetoJson;
         });
 
-        post("/existe", (req, res) -> {
-            String datosCliente = req.body();
-            Usuario u = gson.fromJson(datosCliente, Usuario.class);
+        //AGREGAR PARTIDOS
+        //Prueba de agregar equipo a la base de datos
+        System.out.println(DAO.agregarPartido(new Partido("Japón",3,"USA",2,"Finalizado")));
+
+        //
+        post("/admin", (req, res) -> {
+            String datos = req.body();
+            Partido p = gson.fromJson(datos, Partido.class);
 
             // devolver una respuesta JSON
             JsonObject objetoJson = new JsonObject();
-
-            List<Usuario> x = DAO.dameUsuarios();
-            for (Usuario xUsuario : DAO.dameUsuarios()) {
-                if (xUsuario.getId().equals(u.getId())) {
-                    objetoJson.addProperty("status", true);
-                    objetoJson.addProperty("usuario", gson.toJson(xUsuario));
-                    return objetoJson;
-                }
-            }
-            objetoJson.addProperty("status", false);
+            objetoJson.addProperty("status", DAO.agregarPartido(p));
             return objetoJson;
         });
     }
@@ -76,6 +85,6 @@ public class App {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; // return default port if heroku-port isn't set (i.e. on localhost)
+        return 4567;
     }
 }
