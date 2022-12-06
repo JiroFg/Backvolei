@@ -3,13 +3,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-// import com.mysql.jdbc.PreparedStatement;
-// import com.mysql.jdbc.Statement;
 import java.sql.*;
 
 public class DAO {
 
-    // este metodo regresa un conjunto de usuarios que cumpla un criterio
+    //Metodo para obtener los Equipos de la base de datos
     public static List<Equipo> GetEquipos() {
         Statement stm = null;
         ResultSet rs = null;
@@ -50,13 +48,14 @@ public class DAO {
         return resultado;
     }
 
+    //metodo para obtener los Partidos de la base de datos
     public static List<Partido> GetPartidos() {
         Statement stm = null;
         ResultSet rs = null;
         List<Partido> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from partidos LIMIT 3";
+            String sql = "SELECT * from partidos LIMIT 6";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
@@ -90,6 +89,7 @@ public class DAO {
         return resultado;
     }
 
+    //metodo para agregar un equipo a la base de datos
     public static String agregarEquipo(Equipo e) {
         PreparedStatement stm = null;
         String msj = "";
@@ -126,6 +126,7 @@ public class DAO {
         return msj;
     }
 
+    //Metodo para agregar un partido a la base de datos
     public static String agregarPartido(Partido p) {
         PreparedStatement stm = null;
         String msj = "";
