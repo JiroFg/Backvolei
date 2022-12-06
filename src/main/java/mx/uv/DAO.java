@@ -16,7 +16,7 @@ public class DAO {
         List<Equipo> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from equipos ORDER BY Score DESC";
+            String sql = "SELECT * from equipos ORDER BY Score DESC LIMIT 10";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
@@ -56,7 +56,7 @@ public class DAO {
         List<Partido> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from partidos";
+            String sql = "SELECT * from partidos LIMIT 3";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {

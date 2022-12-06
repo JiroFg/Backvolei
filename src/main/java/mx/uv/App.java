@@ -1,7 +1,6 @@
 package mx.uv;
 import static spark.Spark.*;
 import com.google.gson.*;
-import java.util.List;
 
 public class App {
     public static Gson gson = new Gson();
@@ -27,33 +26,18 @@ public class App {
 
         //CONSULTA EQUIPOS
         //Prueba de la lista de equipos obtenidos de la base de datos.
-        List<Equipo> resultado = DAO.GetEquipos();
-        for(Equipo e: resultado){
-            System.out.println(e.toString());
-        }
-        //---->>> Se convierte a Json para enviarlo
         get("/", (req, res) -> {
             res.type("application/json");
             return gson.toJson(DAO.GetEquipos());
         });
 
         //CONSULTA PARTIDOS
-        //Prueba de la lista de partidos obtenidos de la base de datos.
-        List<Partido> partidos = DAO.GetPartidos();
-        for(Partido p: partidos){
-            System.out.println(p.toString());
-        }
-        //---->>> Se convierte a Json para enviarlo
         get("/partidos", (req, res) -> {
             res.type("application/json");
             return gson.toJson(DAO.GetPartidos());
         });
 
         //AGREGAR EQUIPOS
-        //Prueba de agregar equipo a la base de datos
-        //System.out.println(DAO.agregarEquipo(new Equipo("España", 190)));
-
-        //
         post("/admin", (req, res) -> {
             String datos = req.body();
             Equipo e = gson.fromJson(datos, Equipo.class);
@@ -65,10 +49,6 @@ public class App {
         });
 
         //AGREGAR PARTIDOS
-        //Prueba de agregar equipo a la base de datos
-        System.out.println(DAO.agregarPartido(new Partido("Japón",3,"USA",2,"Finalizado")));
-
-        //
         post("/admin", (req, res) -> {
             String datos = req.body();
             Partido p = gson.fromJson(datos, Partido.class);
