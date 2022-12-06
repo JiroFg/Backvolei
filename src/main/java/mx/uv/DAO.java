@@ -14,11 +14,11 @@ public class DAO {
         List<Equipo> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from equipos ORDER BY Score DESC LIMIT 10";
+            String sql = "SELECT * from equipos2 ORDER BY Score DESC LIMIT 10";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                Equipo u = new Equipo(rs.getString(1), Integer.parseInt(rs.getString(2)));
+                Equipo u = new Equipo(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3)));
                 resultado.add(u);
             }
         } catch (Exception e) {
@@ -55,11 +55,11 @@ public class DAO {
         List<Partido> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from partidos LIMIT 6";
+            String sql = "SELECT * from partidos2 LIMIT 6";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
-                Partido p = new Partido(rs.getString(1),Integer.parseInt(rs.getString(2)), rs.getString(3),Integer.parseInt(rs.getString(4)),rs.getString(5));
+                Partido p = new Partido(Integer.parseInt(rs.getString(1)),rs.getString(2),Integer.parseInt(rs.getString(3)), rs.getString(4),Integer.parseInt(rs.getString(5)),rs.getString(6));
                 resultado.add(p);
             }
         } catch (Exception e) {
@@ -95,11 +95,12 @@ public class DAO {
         String msj = "";
 
         try {
-            String sql = "INSERT INTO equipos (Nombre, Score) values (?,?)";
+            String sql = "INSERT INTO equipos2 (id, nombre, score) values (?,?,?)";
             //INSERT INTO `equipos` (`Nombre`, `Score`) VALUES ('China', '210');
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            stm.setString(1, e.getNombre());
-            stm.setLong(2, e.getScore());
+            stm.setString(1, "NULL");
+            stm.setString(2, e.getNombre());
+            stm.setLong(3, e.getScore());
             if (stm.executeUpdate() > 0){
                 msj = "Equipo agregado";
             }else{
@@ -132,14 +133,15 @@ public class DAO {
         String msj = "";
 
         try {
-            String sql = "INSERT INTO partidos (equipo1, score1, equipo2, score2, status) values (?,?,?,?,?)";
+            String sql = "INSERT INTO partidos2 (id, equipo1, score1, equipo2, score2, status) values (?,?,?,?,?,?)";
             //INSERT INTO `partidos` (`equipo1`, `score1`, `equipo2`, `score2`, `status`) VALUES ('Francia', '3', 'México', '2', 'Finalizado');
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            stm.setString(1, p.getEquipo1());
-            stm.setLong(2, p.getScore1());
-            stm.setString(3, p.getEquipo2());
-            stm.setLong(4, p.getScore2());
-            stm.setString(5, p.getStatus());
+            stm.setString(1, "NULL");
+            stm.setString(2, p.getEquipo1());
+            stm.setLong(3, p.getScore1());
+            stm.setString(4, p.getEquipo2());
+            stm.setLong(5, p.getScore2());
+            stm.setString(6, p.getStatus());
             if (stm.executeUpdate() > 0){
                 msj = "Partido agregado";
             }else{

@@ -38,7 +38,7 @@ public class App {
         });
 
         //AGREGAR EQUIPOS
-        post("/admin", (req, res) -> {
+        post("/addEquipo", (req, res) -> {
             String datos = req.body();
             Equipo e = gson.fromJson(datos, Equipo.class);
 
@@ -49,7 +49,7 @@ public class App {
         });
 
         //AGREGAR PARTIDOS
-        post("/admin", (req, res) -> {
+        post("/addPartido", (req, res) -> {
             String datos = req.body();
             Partido p = gson.fromJson(datos, Partido.class);
 

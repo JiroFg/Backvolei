@@ -1,18 +1,28 @@
 package mx.uv;
 
 public class Partido {
+    int id;
     String equipo1;
     int score1;
     String equipo2;
     int score2;
     String status;
 
-    public Partido(String equipo1, int score1, String equipo2, int score2, String status) {
+    public Partido(int id, String equipo1, int score1, String equipo2, int score2, String status) {
+        this.id = id;
         this.equipo1 = equipo1;
         this.score1 = score1;
         this.equipo2 = equipo2;
         this.score2 = score2;
         this.status = status;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
     
     public String getEquipo1() {
@@ -57,6 +67,6 @@ public class Partido {
 
     @Override
     public String toString() {
-        return this.equipo1 +" "+ this.score1 +" | "+ this.equipo2 +" "+ this.score2 +" | "+ this.status;
+        return this.id +" | "+ this.equipo1 +" "+ this.score1 +" | "+ this.equipo2 +" "+ this.score2 +" | "+ this.status;
     }
 }
