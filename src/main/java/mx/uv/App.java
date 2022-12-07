@@ -41,7 +41,6 @@ public class App {
         post("/addEquipo", (req, res) -> {
             String datos = req.body();
             Equipo e = gson.fromJson(datos, Equipo.class);
-            System.out.println(e.toString());
             //respuesta JSON
             JsonObject objetoJson = new JsonObject();
             objetoJson.addProperty("status", DAO.agregarEquipo(e));
@@ -63,7 +62,7 @@ public class App {
             String datos = req.body();
             Partido p = gson.fromJson(datos, Partido.class);
 
-            // devolver una respuesta JSON
+            //respuesta JSON
             JsonObject objetoJson = new JsonObject();
             objetoJson.addProperty("status", DAO.agregarPartido(p));
             return objetoJson;
