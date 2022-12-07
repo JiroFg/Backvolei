@@ -95,11 +95,10 @@ public class DAO {
         String msj = "";
 
         try {
-            String sql = "INSERT INTO equipos2 (id, nombre, score) values (?,?,?)";
+            String sql = "INSERT INTO equipos2 (nombre, score) values (?,?)";
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            stm.setString(1, "NULL");
-            stm.setString(2, e.getNombre());
-            stm.setLong(3, e.getScore());
+            stm.setString(1, e.getNombre());
+            stm.setLong(2, e.getScore());
             if (stm.executeUpdate() > 0){
                 msj = "Equipo agregado";
             }else{
