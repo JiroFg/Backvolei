@@ -25,10 +25,15 @@ public class App {
         before((req, res)-> res.header("Access-Control-Allow-Origin", "*"));
 
         //CONSULTA EQUIPOS
-        //Prueba de la lista de equipos obtenidos de la base de datos.
         get("/", (req, res) -> {
             res.type("application/json");
             return gson.toJson(DAO.GetEquipos());
+        });
+
+        //CONSULTAR TODOS LOS EQUIPOS
+        get("/allEquipos", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(DAO.GetAllEquipos());
         });
 
         //AGREGAR EQUIPOS
@@ -63,6 +68,12 @@ public class App {
         get("/partidos", (req, res) -> {
             res.type("application/json");
             return gson.toJson(DAO.GetPartidos());
+        });
+
+        //CONSULTA TODOS LOS PARTIDOS
+        get("/allPartidos", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(DAO.GetAllPartidos());
         });
 
         //AGREGAR PARTIDOS

@@ -7,6 +7,46 @@ import java.sql.*;
 
 public class DAO {
 
+    public static List<Equipo> GetAllEquipos() {
+        Statement stm = null;
+        ResultSet rs = null;
+        List<Equipo> resultado = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * from equipos2";
+            stm = (Statement) Conexion.getConnection().createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Equipo u = new Equipo(Integer.parseInt(rs.getString(1)), rs.getString(2), Integer.parseInt(rs.getString(3)));
+                resultado.add(u);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            rs = null;
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return resultado;
+    }
+
     //VISUALIZAR DATOS DE LA BASE
     public static List<Equipo> GetEquipos() {
         Statement stm = null;
@@ -150,6 +190,47 @@ public class DAO {
             }
         }
         return msj;
+    }
+
+    //VISUALIZAR PARTIDOS DE LA BASE
+    public static List<Partido> GetAllPartidos() {
+        Statement stm = null;
+        ResultSet rs = null;
+        List<Partido> resultado = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * from partidos2";
+            stm = (Statement) Conexion.getConnection().createStatement();
+            rs = stm.executeQuery(sql);
+            while (rs.next()) {
+                Partido p = new Partido(Integer.parseInt(rs.getString(1)),rs.getString(2),Integer.parseInt(rs.getString(3)), rs.getString(4),Integer.parseInt(rs.getString(5)),rs.getString(6));
+                resultado.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            if (rs != null)
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println(e);
+                }
+            rs = null;
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        return resultado;
     }
 
     //VISUALIZAR PARTIDOS DE LA BASE
