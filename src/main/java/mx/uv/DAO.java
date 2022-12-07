@@ -55,7 +55,7 @@ public class DAO {
         List<Partido> resultado = new ArrayList<>();
 
         try {
-            String sql = "SELECT * from partidos2 LIMIT 6";
+            String sql = "SELECT * from partidos2 ORDER BY id DESC LIMIT 6";
             stm = (Statement) Conexion.getConnection().createStatement();
             rs = stm.executeQuery(sql);
             while (rs.next()) {
