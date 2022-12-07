@@ -49,13 +49,19 @@ public class App {
 
         post("/delEquipo", (req, res) -> {
             String datos = req.body();
-            System.out.println(datos);
             Equipo e = gson.fromJson(datos, Equipo.class);
-            System.out.println(e.getId());
-
             // devolver una respuesta JSON
             JsonObject objetoJson = new JsonObject();
             objetoJson.addProperty("status", DAO.eliminarEquipo(e.getId()));
+            return objetoJson;
+        });
+
+        post("/updateEquipo", (req, res) -> {
+            String datos = req.body();
+            Equipo e = gson.fromJson(datos, Equipo.class);
+            //respuesta JSON
+            JsonObject objetoJson = new JsonObject();
+            objetoJson.addProperty("status", DAO.actualizarEquipo(e));
             return objetoJson;
         });
 
