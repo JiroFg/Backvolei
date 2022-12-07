@@ -96,7 +96,6 @@ public class DAO {
 
         try {
             String sql = "INSERT INTO equipos2 (id, nombre, score) values (?,?,?)";
-            //INSERT INTO `equipos` (`Nombre`, `Score`) VALUES ('China', '210');
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
             stm.setString(1, "NULL");
             stm.setString(2, e.getNombre());
@@ -127,6 +126,40 @@ public class DAO {
         return msj;
     }
 
+    //ELIMINAR EQUIPO
+    public static String eliminarEquipo(int id) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "DELETE FROM equipos2 WHERE id="+id;
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            if (stm.executeUpdate() > 0){
+                msj = "Equipo eliminado";
+            }else{
+                msj = "El equipo no se pudo eliminar";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
     //Metodo para agregar un partido a la base de datos
     public static String agregarPartido(Partido p) {
         PreparedStatement stm = null;
@@ -134,7 +167,6 @@ public class DAO {
 
         try {
             String sql = "INSERT INTO partidos2 (id, equipo1, score1, equipo2, score2, status) values (?,?,?,?,?,?)";
-            //INSERT INTO `partidos` (`equipo1`, `score1`, `equipo2`, `score2`, `status`) VALUES ('Francia', '3', 'México', '2', 'Finalizado');
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
             stm.setString(1, "NULL");
             stm.setString(2, p.getEquipo1());

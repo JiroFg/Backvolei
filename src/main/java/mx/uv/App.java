@@ -48,6 +48,16 @@ public class App {
             return objetoJson;
         });
 
+        post("/delEquipo", (req, res) -> {
+            String datos = req.body();
+            int id = gson.fromJson(datos, Integer.class);
+
+            // devolver una respuesta JSON
+            JsonObject objetoJson = new JsonObject();
+            objetoJson.addProperty("status", DAO.eliminarEquipo(id));
+            return objetoJson;
+        });
+
         //AGREGAR PARTIDOS
         post("/addPartido", (req, res) -> {
             String datos = req.body();
