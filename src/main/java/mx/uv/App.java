@@ -32,7 +32,6 @@ public class App {
 
         //CONSULTAR TODOS LOS EQUIPOS
         get("/allEquipos", (req, res) -> {
-            res.type("application/json");
             return gson.toJson(DAO.GetAllEquipos());
         });
 

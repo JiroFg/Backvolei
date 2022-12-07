@@ -353,7 +353,7 @@ public class DAO {
         String msj = "";
 
         try {
-            String sql = "UPDATE partidos2 SET equipo1='"+p.getEquipo1()+"', score1="+p.getScore1()+", equipo2='"+p.getEquipo2()+"', score2="+p.getScore1()+", status='"+p.getStatus()+"' WHERE id="+p.getId();
+            String sql = "UPDATE partidos2 SET equipo1='"+p.getEquipo1()+"', score1="+p.getScore1()+", equipo2='"+p.getEquipo2()+"', score2="+p.getScore2()+", status='"+p.getStatus()+"' WHERE id="+p.getId();
             System.out.println(sql);
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
             if (stm.executeUpdate() > 0){
