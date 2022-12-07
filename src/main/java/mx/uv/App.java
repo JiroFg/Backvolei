@@ -49,7 +49,9 @@ public class App {
 
         post("/delEquipo", (req, res) -> {
             String datos = req.body();
+            System.out.println(datos);
             int id = gson.fromJson(datos, Integer.class);
+            System.out.println(id);
 
             // devolver una respuesta JSON
             JsonObject objetoJson = new JsonObject();
