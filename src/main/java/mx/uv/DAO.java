@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class DAO {
 
-    //Metodo para obtener los Equipos de la base de datos
+    //VISUALIZAR DATOS DE LA BASE
     public static List<Equipo> GetEquipos() {
         Statement stm = null;
         ResultSet rs = null;
@@ -118,7 +118,7 @@ public class DAO {
         return msj;
     }
 
-    //ELIMINAR EQUIPO DE LA BASE DE DATOS
+    //ACTUALIZAR EQUIPO DE LA BASE DE DATOS
     public static String actualizarEquipo(Equipo e) {
         PreparedStatement stm = null;
         String msj = "";
@@ -152,7 +152,7 @@ public class DAO {
         return msj;
     }
 
-    //metodo para obtener los Partidos de la base de datos
+    //VISUALIZAR PARTIDOS DE LA BASE
     public static List<Partido> GetPartidos() {
         Statement stm = null;
         ResultSet rs = null;
@@ -193,7 +193,7 @@ public class DAO {
         return resultado;
     }
 
-    //Metodo para agregar un partido a la base de datos
+    //AGREGAR PARTIDOS A LA BASE DE DATOS
     public static String agregarPartido(Partido p) {
         PreparedStatement stm = null;
         String msj = "";
@@ -210,6 +210,75 @@ public class DAO {
                 msj = "Partido agregado";
             }else{
                 msj = "Partido no agregado";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
+    //ELIMINAR PARTIDO DE LA BASE DE DATOS
+    public static String eliminarPartido(int id) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "DELETE FROM partidos2 WHERE id="+id;
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            if (stm.executeUpdate() > 0){
+                msj = "Partido eliminado";
+            }else{
+                msj = "El partido no se pudo eliminar";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
+    //ACTUALIZAR PARTIDO DE LA BASE DE DATOS
+    public static String actualizarPartido(Partido p) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "UPDATE partidos2 SET equipo1='"+p.getEquipo1()+"', score1="+p.getScore1()+", equipo2='"+p.getEquipo2()+"', score2="+p.getScore1()+", status='"+p.getStatus()+"' WHERE id="+p.getId();
+            System.out.println(sql);
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            if (stm.executeUpdate() > 0){
+                msj = "Partido actualizado";
+            }else{
+                msj = "El partido no se pudo actualizar";
             }
 
         } catch (Exception ex) {

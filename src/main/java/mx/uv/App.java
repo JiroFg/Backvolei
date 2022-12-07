@@ -31,12 +31,6 @@ public class App {
             return gson.toJson(DAO.GetEquipos());
         });
 
-        //CONSULTA PARTIDOS
-        get("/partidos", (req, res) -> {
-            res.type("application/json");
-            return gson.toJson(DAO.GetPartidos());
-        });
-
         //AGREGAR EQUIPOS
         post("/addEquipo", (req, res) -> {
             String datos = req.body();
@@ -65,6 +59,12 @@ public class App {
             return objetoJson;
         });
 
+        //CONSULTA PARTIDOS
+        get("/partidos", (req, res) -> {
+            res.type("application/json");
+            return gson.toJson(DAO.GetPartidos());
+        });
+
         //AGREGAR PARTIDOS
         post("/addPartido", (req, res) -> {
             String datos = req.body();
@@ -73,6 +73,24 @@ public class App {
             //respuesta JSON
             JsonObject objetoJson = new JsonObject();
             objetoJson.addProperty("status", DAO.agregarPartido(p));
+            return objetoJson;
+        });
+
+        post("/delPartido", (req, res) -> {
+            String datos = req.body();
+            Partido p = gson.fromJson(datos, Partido.class);
+            // devolver una respuesta JSON
+            JsonObject objetoJson = new JsonObject();
+            objetoJson.addProperty("status", DAO.eliminarPartido(p.getId()));
+            return objetoJson;
+        });
+
+        post("/updatePartido", (req, res) -> {
+            String datos = req.body();
+            Partido p = gson.fromJson(datos, Partido.class);
+            //respuesta JSON
+            JsonObject objetoJson = new JsonObject();
+            objetoJson.addProperty("status", DAO.actualizarPartido(p));
             return objetoJson;
         });
     }
