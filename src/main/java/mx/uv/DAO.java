@@ -48,6 +48,110 @@ public class DAO {
         return resultado;
     }
 
+    //AGREGAR EQUIPO A LA BASE DE DATOS 
+    public static String agregarEquipo(Equipo e) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "INSERT INTO equipos2 (nombre, score) values (?,?)";
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            stm.setString(1, e.getNombre());
+            stm.setLong(2, e.getScore());
+            if (stm.executeUpdate() > 0){
+                msj = "Equipo agregado";
+            }else{
+                msj = "Equipo no agregado";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
+    //ELIMINAR EQUIPO DE LA BASE DE DATOS
+    public static String eliminarEquipo(int id) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "DELETE FROM equipos2 WHERE id="+id;
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            if (stm.executeUpdate() > 0){
+                msj = "Equipo eliminado";
+            }else{
+                msj = "El equipo no se pudo eliminar";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
+    //ELIMINAR EQUIPO DE LA BASE DE DATOS
+    public static String actualizarEquipo(Equipo e) {
+        PreparedStatement stm = null;
+        String msj = "";
+
+        try {
+            String sql = "UPDATE equipos2 SET nombre='"+e.getNombre()+"', score="+e.getScore()+" WHERE id="+e.getId();
+            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
+            if (stm.executeUpdate() > 0){
+                msj = "Equipo actualizado";
+            }else{
+                msj = "El equipo no se pudo actualizar";
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+                stm = null;
+            }
+            try {
+                Conexion.getConnection().close();
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+        return msj;
+    }
+
     //metodo para obtener los Partidos de la base de datos
     public static List<Partido> GetPartidos() {
         Statement stm = null;
@@ -87,76 +191,6 @@ public class DAO {
             }
         }
         return resultado;
-    }
-
-    //metodo para agregar un equipo a la base de datos
-    public static String agregarEquipo(Equipo e) {
-        PreparedStatement stm = null;
-        String msj = "";
-
-        try {
-            String sql = "INSERT INTO equipos2 (nombre, score) values (?,?)";
-            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            stm.setString(1, e.getNombre());
-            stm.setLong(2, e.getScore());
-            if (stm.executeUpdate() > 0){
-                msj = "Equipo agregado";
-            }else{
-                msj = "Equipo no agregado";
-            }
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-                stm = null;
-            }
-            try {
-                Conexion.getConnection().close();
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-        }
-        return msj;
-    }
-
-    //ELIMINAR EQUIPO
-    public static String eliminarEquipo(int id) {
-        PreparedStatement stm = null;
-        String msj = "";
-
-        try {
-            String sql = "DELETE FROM equipos2 WHERE id="+id;
-            stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            if (stm.executeUpdate() > 0){
-                msj = "Equipo eliminado";
-            }else{
-                msj = "El equipo no se pudo eliminar";
-            }
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        } finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-                stm = null;
-            }
-            try {
-                Conexion.getConnection().close();
-            } catch (Exception ex) {
-                System.out.println(ex);
-            }
-        }
-        return msj;
     }
 
     //Metodo para agregar un partido a la base de datos
