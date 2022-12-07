@@ -166,14 +166,13 @@ public class DAO {
         String msj = "";
 
         try {
-            String sql = "INSERT INTO partidos2 (id, equipo1, score1, equipo2, score2, status) values (?,?,?,?,?,?)";
+            String sql = "INSERT INTO partidos2 (equipo1, score1, equipo2, score2, status) values (?,?,?,?,?)";
             stm = (PreparedStatement) Conexion.getConnection().prepareStatement(sql);
-            stm.setString(1, "NULL");
-            stm.setString(2, p.getEquipo1());
-            stm.setLong(3, p.getScore1());
-            stm.setString(4, p.getEquipo2());
-            stm.setLong(5, p.getScore2());
-            stm.setString(6, p.getStatus());
+            stm.setString(1, p.getEquipo1());
+            stm.setLong(2, p.getScore1());
+            stm.setString(3, p.getEquipo2());
+            stm.setLong(4, p.getScore2());
+            stm.setString(5, p.getStatus());
             if (stm.executeUpdate() > 0){
                 msj = "Partido agregado";
             }else{
