@@ -50,12 +50,12 @@ public class App {
         post("/delEquipo", (req, res) -> {
             String datos = req.body();
             System.out.println(datos);
-            int id = gson.fromJson(datos, Integer.class);
-            System.out.println(id);
+            Equipo e = gson.fromJson(datos, Equipo.class);
+            System.out.println(e.getId());
 
             // devolver una respuesta JSON
             JsonObject objetoJson = new JsonObject();
-            objetoJson.addProperty("status", DAO.eliminarEquipo(id));
+            objetoJson.addProperty("status", DAO.eliminarEquipo(e.getId()));
             return objetoJson;
         });
 
